@@ -5,13 +5,12 @@
 //+------------------------------------------------------------------+
 #property copyright "neo"
 #property link "marketnoobtrader@gmail.com"
-#property version "3.0"
+#property version "3.1"
 #property description "[FREE]"
 #property indicator_chart_window
 
 #include "libs/inputs.mqh"
 #include "libs/tools.mqh"
-
 #include "libs/fibo/types.fibo.mqh"
 #include "libs/constants.mqh"
 #include "libs/globals.mqh"
@@ -33,17 +32,17 @@ int OnInit()
 // ChartSetInteger(0, CHART_SHOW_GRID, 0);
 // ChartSetDouble(0, CHART_FIXED_POSITION, 35);
 // ChartSetInteger(0, CHART_SHOW_ASK_LINE, 0);
-    point = Point;
+    g_point = Point;
     if((Digits == 3) || (Digits == 5))
        {
-        point *= 10;
+        g_point *= 10;
        }
     MathSrand(GetTickCount());
     setAllLables();
     if(ShowCandleTimer)
        {
-        cctr = new CCTRLib(cctrLocation, cctrDisplayServerTime, cctrPlayAlert, cctrCustomAlertSound, cctrFontSize, cctrColor);
-        cctr.Init();
+        g_cctr = new CCTRLib(cctrLocation, cctrDisplayServerTime, cctrPlayAlert, cctrCustomAlertSound, cctrFontSize, cctrColor);
+        g_cctr.Init();
         EventSetMillisecondTimer(500);
        }
     else
@@ -58,16 +57,16 @@ int OnInit()
 //+------------------------------------------------------------------+
 void OnTimer()
    {
-    currentTickCount = GetTickCount();
-    if(cctr != NULL)
+    g_currentTickCount = GetTickCount();
+    if(g_cctr != NULL)
        {
-        cctr.Update();
+        g_cctr.Update();
        }
 // Every 2 seconds
-    if(currentTickCount - lastPrint2s >= 2000)
+    if(g_currentTickCount - g_lastPrint2s >= 2000)
        {
-        lastPrint2s = currentTickCount;
-        DeleteObject(DYNAMIC_DEFAULT_STRING);
+        g_lastPrint2s = g_currentTickCount;
+        DeleteObject(g_DYNAMIC_DEFAULT_STRING);
         setPointLable();
        }
    }
@@ -86,9 +85,9 @@ int OnCalculate(const int rates_total,
                 const long &volume[],
                 const int &spread[])
    {
-    if(cctr != NULL && IsVisualMode())
+    if(g_cctr != NULL && IsVisualMode())
        {
-        cctr.Update();
+        g_cctr.Update();
        }
     if(ShowComment)
        {
@@ -102,13 +101,13 @@ int OnCalculate(const int rates_total,
 //+------------------------------------------------------------------+
 void OnDeinit(const int reason)
    {
-    DeleteObject(STATIC_DEFAULT_STRING);
-    DeleteObject(DYNAMIC_DEFAULT_STRING);
+    DeleteObject(g_STATIC_DEFAULT_STRING);
+    DeleteObject(g_DYNAMIC_DEFAULT_STRING);
     EventKillTimer();
-    if(cctr != NULL)
+    if(g_cctr != NULL)
        {
-        delete cctr;
-        cctr = NULL;
+        delete g_cctr;
+        g_cctr = NULL;
        }
     Comment("");
    }
@@ -121,7 +120,7 @@ void comment()
     string depositCurrency = AccountInfoString(ACCOUNT_CURRENCY);
     double tickSize = MarketInfo(NULL, MODE_TICKSIZE);
     double tickValue = MarketInfo(NULL, MODE_TICKVALUE);
-    double pipValuePerLot = (tickValue * point) / tickSize;
+    double pipValuePerLot = (tickValue * g_point) / tickSize;
     double pipValue = pipValuePerLot * 1; // lotSize>> 1
     string info = "\n";
     info += "#Spread: " + DoubleToStr(SPREAD, 1) + "\n";
@@ -136,7 +135,7 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
    {
     if(id == CHARTEVENT_OBJECT_CLICK)
        {
-        if(isExtendEnable)
+        if(g_isExtendEnable)
            {
             double _price2 = ObjectGet(sparam, OBJPROP_PRICE2);
             double _price1 = ObjectGet(sparam, OBJPROP_PRICE1);
@@ -169,7 +168,7 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
         StringToUpper(code);
         if(code == "1")
            {
-            isExtendEnable = !isExtendEnable;
+            g_isExtendEnable = !g_isExtendEnable;
            }
         else
             if(result == 9)
@@ -179,17 +178,17 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
             else
                 if(code == "4")
                    {
-                    CreateFiboLevels(FIBO_MODE_QUARTERS, fiboLevelsQuarters);
+                    CreateFiboLevels(FIBO_MODE_QUARTERS, g_fiboLevelsQuarters);
                    }
                 else
                     if(code == "3")
                        {
-                        CreateFiboLevels(FIBO_MODE_THIRDS, fiboLevelsThirds);
+                        CreateFiboLevels(FIBO_MODE_THIRDS, g_fiboLevelsThirds);
                        }
                     else
                         if(code == "2")
                            {
-                            CreateFiboLevels(FIBO_MODE_RR, fiboLevelsRR);
+                            CreateFiboLevels(FIBO_MODE_RR, g_fiboLevelsRR);
                            }
                         else
                             if(code == "0")

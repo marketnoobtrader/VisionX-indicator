@@ -88,7 +88,7 @@ CCTRLib::CCTRLib(CCTR_LOCATION location = CCTR_TOP_RIGHT,
     m_customAlertSound = customAlertSound;
     m_fontSize = fontSize;
     m_colour = colour;
-    m_objectName = GenerateRandomObjectName(STATIC_DEFAULT_STRING);
+    m_objectName = GenerateRandomObjectName(g_STATIC_DEFAULT_STRING);
     m_alert_played = false;
    }
 
@@ -236,12 +236,12 @@ bool CCTRLib::IsMarketClosed()
 
 #include "candle-timer.mqh"
 
-CCTRLib* cctr;
+CCTRLib* g_cctr;
 
 int OnInit()
 {
-   cctr = new CCTRLib(CCTR_TOP_RIGHT, CCTR_ON, CCTR_OFF, "", 9, clrYellow, "MyCCTR");
-   cctr.Init();
+   g_cctr = new CCTRLib(CCTR_TOP_RIGHT, CCTR_ON, CCTR_OFF, "", 9, clrYellow, "MyCCTR");
+   g_cctr.Init();
    EventSetMillisecondTimer(250);
    return(INIT_SUCCEEDED);
 }
@@ -249,8 +249,8 @@ int OnInit()
 void OnDeinit(const int reason)
 {
    EventKillTimer();
-   delete cctr;
-   cctr = NULL;
+   delete g_cctr;
+   g_cctr = NULL;
 }
 
 int OnCalculate(const int rates_total,
@@ -266,14 +266,14 @@ int OnCalculate(const int rates_total,
 {
    if(IsVisualMode())
    {
-      cctr.Update();
+      g_cctr.Update();
    }
    return(rates_total);
 }
 
 void OnTimer()
 {
-   cctr.Update();
+   g_cctr.Update();
 }
 */
 

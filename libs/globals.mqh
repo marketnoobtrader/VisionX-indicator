@@ -8,11 +8,11 @@
 
 #include "candleTimer/candleTimer.mqh"
 
-CCTRLib* cctr;
-double point;
-ulong currentTickCount;
-ulong lastPrint2s = 0;
-bool isExtendEnable = false;
+CCTRLib* g_cctr;
+double g_point;
+ulong g_currentTickCount;
+ulong g_lastPrint2s = 0;
+bool g_isExtendEnable = false;
 
 #endif
 //+------------------------------------------------------------------+

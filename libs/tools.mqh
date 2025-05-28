@@ -184,10 +184,10 @@ bool FindText(string t1, string t2)
 bool RectangleCreate(const long            chart_ID = 0,      // chart's ID
                      const string          name = "Rectangle", // rectangle name
                      const int             sub_window = 0,    // subwindow index
-                     datetime              time1 = 0,         // first point time
-                     double                price1 = 0,        // first point price
-                     datetime              time2 = 0,         // second point time
-                     double                price2 = 0,        // second point price
+                     datetime              time1 = 0,         // first g_point time
+                     double                price1 = 0,        // first g_point price
+                     datetime              time2 = 0,         // second g_point time
+                     double                price2 = 0,        // second g_point price
                      const color           clr = clrRed,      // rectangle color
                      const ENUM_LINE_STYLE style = STYLE_SOLID, // style of rectangle lines
                      const int             width = 1,         // width of rectangle lines
@@ -236,10 +236,10 @@ bool RectangleCreate(const long            chart_ID = 0,      // chart's ID
 bool TrendCreate(const long            chart_ID = 0,      // chart's ID
                  const string          name = "TrendLine", // line name
                  const int             sub_window = 0,    // subwindow index
-                 datetime              time1 = 0,         // first point time
-                 double                price1 = 0,        // first point price
-                 datetime              time2 = 0,         // second point time
-                 double                price2 = 0,        // second point price
+                 datetime              time1 = 0,         // first g_point time
+                 double                price1 = 0,        // first g_point price
+                 datetime              time2 = 0,         // second g_point time
+                 double                price2 = 0,        // second g_point price
                  const color           clr = clrRed,      // line color
                  const ENUM_LINE_STYLE style = STYLE_SOLID, // line style
                  const int             width = 1,         // line width
@@ -362,7 +362,7 @@ bool LabelCreate(const long              chart_ID = 0,             // chart's ID
 //--- set label coordinates
     ObjectSetInteger(chart_ID, name, OBJPROP_XDISTANCE, x);
     ObjectSetInteger(chart_ID, name, OBJPROP_YDISTANCE, y);
-//--- set the chart's corner, relative to which point coordinates are defined
+//--- set the chart's corner, relative to which g_point coordinates are defined
     ObjectSetInteger(chart_ID, name, OBJPROP_CORNER, corner);
 //--- set the text
     ObjectSetString(chart_ID, name, OBJPROP_TEXT, text);
@@ -395,10 +395,10 @@ bool LabelCreate(const long              chart_ID = 0,             // chart's ID
 bool FiboLevelsCreate(const long            chart_ID = 0,      // chart's ID
                       const string          name = "FiboLevels", // object name
                       const int             sub_window = 0,    // subwindow index
-                      datetime              time1 = 0,         // first point time
-                      double                price1 = 0,        // first point price
-                      datetime              time2 = 0,         // second point time
-                      double                price2 = 0,        // second point price
+                      datetime              time1 = 0,         // first g_point time
+                      double                price1 = 0,        // first g_point price
+                      datetime              time2 = 0,         // second g_point time
+                      double                price2 = 0,        // second g_point price
                       const color           clr = clrRed,      // object color
                       const ENUM_LINE_STYLE style = STYLE_SOLID, // object line style
                       const int             width = 1,         // object line width
