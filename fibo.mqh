@@ -36,7 +36,7 @@ void CreateFiboLevels(FiboMode mode, const string &ffInpLevels)
         FiboLevelsCreate(
             0, fiboName, 0, middleTime, MiddlePrice,
             middleTime + Period() * 60 * 5,
-            MiddlePrice + Point,
+            MiddlePrice + 10 * Point,
             fibCenterColor, STYLE_DOT, 1, true
         );
        }
@@ -55,7 +55,7 @@ void CreateFiboLevels(FiboMode mode, const string &ffInpLevels)
                }
             FiboLevelsCreate(
                 0, fiboName, 0, middleTime, MiddlePrice,
-                middleTime + Period() * 60 * 5, MiddlePrice + Point,
+                middleTime + Period() * 60 * 5, MiddlePrice + 10 * Point,
                 fibCenterColor, STYLE_DOT, 1, true
             );
            }
@@ -74,7 +74,7 @@ void CreateFiboLevels(FiboMode mode, const string &ffInpLevels)
                    }
                 FiboLevelsCreate(
                     0, fiboName, 0, middleTime, MiddlePrice,
-                    middleTime + Period() * 60 * 5, MiddlePrice + Point,
+                    middleTime + Period() * 60 * 5, MiddlePrice + 10 * Point,
                     fibCenterColor, STYLE_DOT, 1, true
                 );
                }

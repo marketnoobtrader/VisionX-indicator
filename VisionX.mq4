@@ -113,15 +113,18 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
             bool _back = (int)ObjectGet(sparam, OBJPROP_BACK);
             datetime _time2 = (datetime)ObjectGet(sparam, OBJPROP_TIME2);
             datetime _time1 = (datetime)ObjectGet(sparam, OBJPROP_TIME1);
+            datetime maxTime = (_time1 > _time2) ? _time1 : _time2;
+            datetime minTime = (_time1 > _time2) ? _time2 : _time1;
             if(FindText(sparam, "Rectangle"))
                {
                 ObjectDelete(sparam);
-                RectangleCreate(0, sparam, 0, _time1, _price1, FindBarTimeByPriceRange(_price1, _time2, _price2), _price2, _color, _style, _width, _fill, _back);
+                RectangleCreate(0, sparam, 0, minTime, _price1, FindBarTimeByPriceRange(_price1, maxTime, _price2), _price2, _color, _style, _width, _fill, _back);
+                // ObjectSet(sparam, OBJPROP_TIME2, FindBarTimeByPriceRange(_price1, maxTime, _price2));
                }
             if(FindText(sparam, "Trendline"))
                {
                 ObjectDelete(sparam);
-                TrendCreate(0, sparam, 0, _time1, _price1, FindBarTimeByPriceRange(_price1, _time2), _price1, _color, _style, _width, _back);
+                TrendCreate(0, sparam, 0, minTime, _price1, FindBarTimeByPriceRange(_price1, maxTime), _price1, _color, _style, _width, _back);
                }
            }
        }
