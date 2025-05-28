@@ -3,12 +3,12 @@
 //|                                      Copyright 2018, CompanyName |
 //|                                       http://www.companyname.net |
 //+------------------------------------------------------------------+
-#include "inputs.mqh"
-#include "forall.mqh"
-#include "types.mqh"
-#include "constants.mqh"
-#include "tools.mqh"
-#include "globals.mqh"
+#include "../inputs.mqh"
+
+#include "../fibo/types.fibo.mqh"
+#include "../constants.mqh"
+#include "../tools.mqh"
+#include "../globals.mqh"
 
 
 // Function to create Fibonacci levels based on mode

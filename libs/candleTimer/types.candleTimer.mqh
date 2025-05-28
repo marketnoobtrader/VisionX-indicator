@@ -3,23 +3,22 @@
 //|                                      Copyright 2018, CompanyName |
 //|                                       http://www.companyname.net |
 //+------------------------------------------------------------------+
-#ifndef __TYPES_MQH__
-#define __TYPES_MQH__
+#ifndef __TYPE_CANDLE_TIMER_MQH__
+#define __TYPE_CANDLE_TIMER_MQH__
 
-struct FiboLevel
+enum CCTR_LOCATION
    {
-    double           PriceLevel;
-    color            LineColor;
-    ENUM_LINE_STYLE  LineStyle;
-    int              LineWidth;
-    string           LabelText;
+    CCTR_TOP_LEFT     = 0, // Top-Left
+    CCTR_TOP_RIGHT    = 1, // Top-Right
+    CCTR_BOTTOM_LEFT  = 2, // Bottom-Left
+    CCTR_BOTTOM_RIGHT = 3, // Bottom-Right
+    CCTR_COMMENT      = 4  // Comment Area
    };
 
-enum FiboMode
+enum CCTR_ONOFF
    {
-    FIBO_MODE_RR = 2,
-    FIBO_MODE_THIRDS = 3,
-    FIBO_MODE_QUARTERS = 4,
+    CCTR_ON  = 1,  // On
+    CCTR_OFF = 0   // Off
    };
 
 #endif

@@ -1,22 +1,26 @@
 //+------------------------------------------------------------------+
-//|                                                     pip-size.mq4 |
-//|                        Copyright 2021, MetaQuotes Software Corp. |
-//|                                             https://www.mql5.com |
+//|                                                      ProjectName |
+//|                                      Copyright 2018, CompanyName |
+//|                                       http://www.companyname.net |
 //+------------------------------------------------------------------+
 #property copyright "neo"
 #property link "marketnoobtrader@gmail.com"
-#property version "2.0"
+#property version "3.0"
 #property description "[FREE]"
 #property indicator_chart_window
 
-#include "inputs.mqh"
-#include "forall.mqh"
-#include "types.mqh"
-#include "constants.mqh"
-#include "globals.mqh"
-#include "tools.mqh"
-#include "fibo.mqh"
-#include "lables.mqh"
+#include "libs/inputs.mqh"
+#include "libs/tools.mqh"
+
+#include "libs/fibo/types.fibo.mqh"
+#include "libs/constants.mqh"
+#include "libs/globals.mqh"
+#include "libs/fibo/fibo.mqh"
+#include "libs/lables.mqh"
+#include "libs/candleTimer/candleTimer.mqh"
+
+
+
 
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -35,8 +39,17 @@ int OnInit()
         point *= 10;
        }
     MathSrand(GetTickCount());
-    EventSetTimer(2);
     setAllLables();
+    if(ShowCandleTimer)
+       {
+        cctr = new CCTRLib(cctrLocation, cctrDisplayServerTime, cctrPlayAlert, cctrCustomAlertSound, cctrFontSize, cctrColor);
+        cctr.Init();
+        EventSetMillisecondTimer(500);
+       }
+    else
+       {
+        EventSetMillisecondTimer(2000);
+       }
     return (INIT_SUCCEEDED);
    }
 
@@ -45,8 +58,18 @@ int OnInit()
 //+------------------------------------------------------------------+
 void OnTimer()
    {
-    DeleteObject(DYNAMIC_DEFAULT_STRING);
-    setPointLable();
+    currentTickCount = GetTickCount();
+    if(cctr != NULL)
+       {
+        cctr.Update();
+       }
+// Every 2 seconds
+    if(currentTickCount - lastPrint2s >= 2000)
+       {
+        lastPrint2s = currentTickCount;
+        DeleteObject(DYNAMIC_DEFAULT_STRING);
+        setPointLable();
+       }
    }
 
 //+------------------------------------------------------------------+
@@ -63,7 +86,14 @@ int OnCalculate(const int rates_total,
                 const long &volume[],
                 const int &spread[])
    {
-    comment();
+    if(cctr != NULL && IsVisualMode())
+       {
+        cctr.Update();
+       }
+    if(ShowComment)
+       {
+        comment();
+       }
     return (rates_total);
    }
 
@@ -75,6 +105,11 @@ void OnDeinit(const int reason)
     DeleteObject(STATIC_DEFAULT_STRING);
     DeleteObject(DYNAMIC_DEFAULT_STRING);
     EventKillTimer();
+    if(cctr != NULL)
+       {
+        delete cctr;
+        cctr = NULL;
+       }
     Comment("");
    }
 
@@ -83,7 +118,6 @@ void OnDeinit(const int reason)
 //+------------------------------------------------------------------+
 void comment()
    {
-//  double spreadPoints = (Ask - Bid) / point;
     string depositCurrency = AccountInfoString(ACCOUNT_CURRENCY);
     double tickSize = MarketInfo(NULL, MODE_TICKSIZE);
     double tickValue = MarketInfo(NULL, MODE_TICKVALUE);
