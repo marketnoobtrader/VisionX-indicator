@@ -5,7 +5,7 @@
 //+------------------------------------------------------------------+
 #property copyright "neo"
 #property link "marketnoobtrader@gmail.com"
-#property version "3.1"
+#property version "3.2"
 #property description "[FREE]"
 #property indicator_chart_window
 
@@ -148,16 +148,21 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
             datetime _time1 = (datetime)ObjectGet(sparam, OBJPROP_TIME1);
             datetime maxTime = (_time1 > _time2) ? _time1 : _time2;
             datetime minTime = (_time1 > _time2) ? _time2 : _time1;
-            if(FindText(sparam, "Rectangle"))
+            const string regtangleKey = "Rectangle";
+            if(FindText(sparam, regtangleKey))
                {
                 ObjectDelete(sparam);
                 RectangleCreate(0, sparam, 0, minTime, _price1, FindBarTimeByPriceRange(_price1, maxTime, _price2), _price2, _color, _style, _width, _fill, _back);
                 // ObjectSet(sparam, OBJPROP_TIME2, FindBarTimeByPriceRange(_price1, maxTime, _price2));
                }
-            if(FindText(sparam, "Trendline"))
+            else
                {
-                ObjectDelete(sparam);
-                TrendCreate(0, sparam, 0, minTime, _price1, FindBarTimeByPriceRange(_price1, maxTime), _price1, _color, _style, _width, _back);
+                const string tredlineKey = "Trendline";
+                if(FindText(sparam, tredlineKey))
+                   {
+                    ObjectDelete(sparam);
+                    TrendCreate(0, sparam, 0, minTime, _price1, FindBarTimeByPriceRange(_price1, maxTime), _price1, _color, _style, _width, _back);
+                   }
                }
            }
        }

@@ -16,6 +16,16 @@ const string _pointLableSeperatorArrow = ">";
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
+const string _name_dynamic0 = GenerateRandomObjectName(g_DYNAMIC_DEFAULT_STRING);
+const string _name_dynamic1 = GenerateRandomObjectName(g_DYNAMIC_DEFAULT_STRING);
+const string _name_dynamic2 = GenerateRandomObjectName(g_DYNAMIC_DEFAULT_STRING);
+const string _name_dynamic3 = GenerateRandomObjectName(g_DYNAMIC_DEFAULT_STRING);
+const string _name_dynamic4 = GenerateRandomObjectName(g_DYNAMIC_DEFAULT_STRING);
+const string _name_static0 = GenerateRandomObjectName(g_STATIC_DEFAULT_STRING);
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 void setPointLable()
    {
     if(!ShowPointOffset_Label)
@@ -25,13 +35,13 @@ void setPointLable()
     ChartTimePriceToXY(0, 0, Time[1], High[1] + (PointOffset * Point), _shiftedX, _shiftedY);
     _offsetX = MathAbs(_shiftedX - _baseX);
     _offsetY = MathAbs(_shiftedY - _baseY);
-    LabelCreate(0, GenerateRandomObjectName(g_DYNAMIC_DEFAULT_STRING), 0, 0,
+    LabelCreate(0, _name_dynamic0, 0, 0,
                 70,
                 CORNER_RIGHT_UPPER, _pointLableTXT, FontSize, LabelColor, -90, ANCHOR_RIGHT_UPPER);
-    LabelCreate(0, GenerateRandomObjectName(g_DYNAMIC_DEFAULT_STRING), 0, 0, 70, CORNER_RIGHT_UPPER, _pointLableSeperator, FontSize, LabelColor, 0, ANCHOR_RIGHT);
-    LabelCreate(0, GenerateRandomObjectName(g_DYNAMIC_DEFAULT_STRING), 0, 0, 70 + _offsetY, CORNER_RIGHT_UPPER, _pointLableSeperator, FontSize, LabelColor, 0, ANCHOR_RIGHT);
-    LabelCreate(0, GenerateRandomObjectName(g_DYNAMIC_DEFAULT_STRING), 0, 0, 70 + 1, CORNER_RIGHT_UPPER, _pointLableSeperatorArrow, FontSize, LabelColor, 90, ANCHOR_RIGHT_LOWER);
-    LabelCreate(0, GenerateRandomObjectName(g_DYNAMIC_DEFAULT_STRING), 0, 0, 70 + _offsetY - 1, CORNER_RIGHT_UPPER, _pointLableSeperatorArrow, FontSize, LabelColor, -90, ANCHOR_RIGHT_UPPER);
+    LabelCreate(0, _name_dynamic1, 0, 0, 70, CORNER_RIGHT_UPPER, _pointLableSeperator, FontSize, LabelColor, 0, ANCHOR_RIGHT);
+    LabelCreate(0, _name_dynamic2, 0, 0, 70 + _offsetY, CORNER_RIGHT_UPPER, _pointLableSeperator, FontSize, LabelColor, 0, ANCHOR_RIGHT);
+    LabelCreate(0, _name_dynamic3, 0, 0, 70 + 1, CORNER_RIGHT_UPPER, _pointLableSeperatorArrow, FontSize, LabelColor, 90, ANCHOR_RIGHT_LOWER);
+    LabelCreate(0, _name_dynamic4, 0, 0, 70 + _offsetY - 1, CORNER_RIGHT_UPPER, _pointLableSeperatorArrow, FontSize, LabelColor, -90, ANCHOR_RIGHT_UPPER);
    }
 
 //+------------------------------------------------------------------+
@@ -45,7 +55,7 @@ void setTimeLable()
     int brokerOffsetMinutes = GetBrokerTimeOffsetMinutes();
     string brokerOffsetString = TimeOffsetToString(brokerOffsetMinutes);
     string timeOffsetLabel = "[Time Difference]: " + brokerOffsetString;
-    LabelCreate(0, GenerateRandomObjectName(g_STATIC_DEFAULT_STRING), 0, 0, 7, CORNER_RIGHT_LOWER, timeOffsetLabel, FontSize, LabelColor, -90, ANCHOR_RIGHT_UPPER);
+    LabelCreate(0, _name_static0, 0, 0, 7, CORNER_RIGHT_LOWER, timeOffsetLabel, FontSize, LabelColor, -90, ANCHOR_RIGHT_UPPER);
    }
 
 

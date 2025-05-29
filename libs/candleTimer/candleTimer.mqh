@@ -61,14 +61,14 @@ public:
     void             SetLocation(CCTR_LOCATION location) { m_location = location; }
     void             SetDisplayServerTime(CCTR_ONOFF display) { m_displayServerTime = display; }
     void             SetPlayAlert(CCTR_ONOFF alert) { m_playAlert = alert; }
-    void             SetCustomAlertSound(string sound) { m_customAlertSound = sound; }
+    void             SetCustomAlertSound(string &sound) { m_customAlertSound = sound; }
     void             SetFontSize(int size) { m_fontSize = size; }
     void             SetColour(color clr) { m_colour = clr; }
     void             SetObjectName(string name) { m_objectName = name; }
 
     // Getter methods
     datetime         GetTimeRemaining() { return m_leftTime; }
-    string           GetFormattedTime() { return m_sTime; }
+    void             GetFormattedTime(string &destStr) { destStr = m_sTime; }
     bool             IsMarketClosed();
    };
 

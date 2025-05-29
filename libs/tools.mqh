@@ -60,11 +60,11 @@ string GenerateRandomObjectName(const string &objectPrefix, int indexTime = -1)
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-void DeleteObject(string prefix)
+void DeleteObject(const string& prefix)
    {
     for(int i = ObjectsTotal() - 1; i >= 0; i--)
        {
-        string name = ObjectName(i);
+        const string name = ObjectName(i);
         if(StringFind(name, prefix) != -1)
             ObjectDelete(0, name);
        }
@@ -135,7 +135,7 @@ void obj_set_width(int v)
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-string new_obj_name(string s, double p)
+string new_obj_name(string& s, double p)
    {
     string myarray1[], mid_p;
     StringSplit(s, ' ', myarray1);
@@ -149,12 +149,14 @@ string new_obj_name(string s, double p)
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-int objexist(string pass)
+int objexist(const string& pass)
    {
     int t = 0;
+    string objName;
     for(int i = ObjectsTotal() - 1; i >= 0;  i--)
        {
-        if(FindText(ObjectName(i), pass))
+        objName = ObjectName(i);
+        if(FindText(objName, pass))
             ++t;
        }
     return(t);
@@ -165,7 +167,7 @@ int objexist(string pass)
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-bool FindText(string t1, string t2)
+bool FindText(const string& t1, const string& t2)
    {
     if(StringFind(t1, t2) == -1)
        {
@@ -181,8 +183,8 @@ bool FindText(string t1, string t2)
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-bool RectangleCreate(const long            chart_ID = 0,      // chart's ID
-                     const string          name = "Rectangle", // rectangle name
+bool RectangleCreate(const long            chart_ID,      // chart's ID
+                     const string&          name, // rectangle name
                      const int             sub_window = 0,    // subwindow index
                      datetime              time1 = 0,         // first g_point time
                      double                price1 = 0,        // first g_point price
@@ -233,8 +235,8 @@ bool RectangleCreate(const long            chart_ID = 0,      // chart's ID
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-bool TrendCreate(const long            chart_ID = 0,      // chart's ID
-                 const string          name = "TrendLine", // line name
+bool TrendCreate(const long            chart_ID,       // chart's ID
+                 const string&          name, // line name
                  const int             sub_window = 0,    // subwindow index
                  datetime              time1 = 0,         // first g_point time
                  double                price1 = 0,        // first g_point price
@@ -299,11 +301,11 @@ void DeleteAllObject()
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-void DeleteObject2(string find1, string find2)
+void DeleteObject2(const string& find1, const string &find2)
    {
     for(int i = ObjectsTotal() - 1; i >= 0;  i--)
        {
-        string x = ObjectName(i);
+        const string x = ObjectName(i);
         if(FindText(x, find1) && FindText(x, find2))
             ObjectDelete(x);
        }
@@ -333,13 +335,13 @@ int getMiddleBarIndex()
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-bool LabelCreate(const long              chart_ID = 0,             // chart's ID
-                 const string            name = "Label",           // label name
-                 const int               sub_window = 0,           // subwindow index
-                 const int               x = 0,                    // X coordinate
-                 const int               y = 0,                    // Y coordinate
-                 const ENUM_BASE_CORNER  corner = CORNER_LEFT_UPPER, // chart corner for anchoring
-                 const string            text = "Label",           // text
+bool LabelCreate(const long              chart_ID,              // chart's ID
+                 const string&            name,           // label name
+                 const int               sub_window,           // subwindow index
+                 const int               x,                    // X coordinate
+                 const int               y,                    // Y coordinate
+                 const ENUM_BASE_CORNER  corner, // chart corner for anchoring
+                 const string            &text,           // text
                  const int               font_size = 10,           // font size
                  const color             clr = clrRed,             // color
                  const double            angle = 0.0,              // text slope
@@ -392,8 +394,8 @@ bool LabelCreate(const long              chart_ID = 0,             // chart's ID
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
-bool FiboLevelsCreate(const long            chart_ID = 0,      // chart's ID
-                      const string          name = "FiboLevels", // object name
+bool FiboLevelsCreate(const long            chart_ID,      // chart's ID
+                      const string &         name, // object name
                       const int             sub_window = 0,    // subwindow index
                       datetime              time1 = 0,         // first g_point time
                       double                price1 = 0,        // first g_point price
