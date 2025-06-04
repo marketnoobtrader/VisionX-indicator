@@ -15,7 +15,7 @@
 void CreateFiboLevels(FiboMode mode, const string &ffInpLevels)
    {
     FiboLevel fiboLevels[];
-    string fiboName = GenerateRandomObjectName(g_STATIC_DEFAULT_STRING);
+    string fiboName = GenerateRandomObjectName(g_DEFAULT_STRING);
     datetime middleTime = Time[getMiddleBarIndex()];
     string levelStrings[];
     int levelCount = StringSplit(ffInpLevels, ',', levelStrings);

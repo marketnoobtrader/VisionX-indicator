@@ -5,7 +5,7 @@
 //+------------------------------------------------------------------+
 #property copyright "neo"
 #property link "marketnoobtrader@gmail.com"
-#property version "3.2"
+#property version "3.3"
 #property description "[FREE]"
 #property indicator_chart_window
 
@@ -17,9 +17,6 @@
 #include "libs/fibo/fibo.mqh"
 #include "libs/lables.mqh"
 #include "libs/candleTimer/candleTimer.mqh"
-
-
-
 
 //+------------------------------------------------------------------+
 //|                                                                  |
@@ -37,6 +34,7 @@ int OnInit()
        {
         g_point *= 10;
        }
+
     MathSrand(GetTickCount());
     setAllLables();
     if(ShowCandleTimer)
@@ -103,6 +101,7 @@ void OnDeinit(const int reason)
    {
     DeleteObject(g_STATIC_DEFAULT_STRING);
     DeleteObject(g_DYNAMIC_DEFAULT_STRING);
+
     EventKillTimer();
     if(g_cctr != NULL)
        {
@@ -115,16 +114,26 @@ void OnDeinit(const int reason)
 //+------------------------------------------------------------------+
 //|                                                                  |
 //+------------------------------------------------------------------+
+double PipValuePerLot()
+   {
+    double tickSize = MarketInfo(Symbol(), MODE_TICKSIZE);
+    double tickValue = MarketInfo(Symbol(), MODE_TICKVALUE);
+    double point = MarketInfo(Symbol(), MODE_POINT);
+    return tickValue * point / tickSize;
+   }
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
 void comment()
    {
-    string depositCurrency = AccountInfoString(ACCOUNT_CURRENCY);
-    double tickSize = MarketInfo(NULL, MODE_TICKSIZE);
-    double tickValue = MarketInfo(NULL, MODE_TICKVALUE);
-    double pipValuePerLot = (tickValue * g_point) / tickSize;
-    double pipValue = pipValuePerLot * 1; // lotSize>> 1
+    const string depositCurrency = AccountInfoString(ACCOUNT_CURRENCY);
+    double pipValuePerLot = PipValuePerLot();
+
     string info = "\n";
     info += "#Spread: " + DoubleToStr(SPREAD, 1) + "\n";
-    info += "#Pip Value(" + depositCurrency + "): " + DoubleToStr(pipValue, 2) + "\n";
+    info += "#pipValue(" + depositCurrency + "): " + DoubleToStr(pipValuePerLot, 2) + "\n";
+
     Comment(info);
    }
 
